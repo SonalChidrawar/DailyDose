@@ -1,0 +1,46 @@
+{
+  "status": "ok",
+  "totalResults": 10,
+  "articles": [
+    {
+      "source": { "id": "bbc-news", "name": "BBC News" },
+      "author": "BBC News",
+      "title": "Alec Baldwin enters not guilty plea over Halyna Hutchins death",
+      "description": "Prosecutors accuse the 30 Rock actor of \"criminal negligence\" as he enters his plea online.",
+      "url": "http://www.bbc.co.uk/news/world-us-canada-64752583",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/26CD/production/_128733990_gettyimages-1447265521.jpg",
+      "publishedAt": "2023-02-24T09:07:19.239308Z",
+      "content": "Alec Baldwin has pleaded not guilty to involuntary manslaughter for the fatal shooting of cinematographer Halyna Hutchins on the set of the movie Rust.\r\nThe 30 Rock actor entered his plea online and … [+2025 chars]"
+    },
+    {
+      "source": { "id": "bbc-news", "name": "BBC News" },
+      "author": "BBC News",
+      "title": "Ukraine war: Vuhledar, the mining town Russia wants to take",
+      "description": "Orla Guerin reports from Vuhledar, an eastern Ukrainian town Russia is desperate to capture.",
+      "url": "http://www.bbc.co.uk/news/world-europe-64744125",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/5FA2/production/_128728442_soldiercarryingmortarshell.jpg",
+      "publishedAt": "2023-02-24T06:07:17.6450883Z",
+      "content": "The commander, codenamed Beast, looked exhausted. \r\nBeneath his green helmet, dark shadows ringed his eyes. He had been on his feet all night fighting. Like many on Ukraine's eastern front, he is bot… [+5027 chars]"
+    },
+    {
+      "source": { "id": "bbc-news", "name": "BBC News" },
+      "author": "BBC News",
+      "title": "Ukraine war latest news: Ukrainians mark one year since Russian invasion",
+      "description": "Exactly 12 months since Vladimir Putin launched his \"special military operation\", upending the lives of millions, the fighting rages on.",
+      "url": "http://www.bbc.co.uk/news/live/world-europe-64750118",
+      "urlToImage": "https://m.files.bbci.co.uk/modules/bbc-morph-news-waf-page-meta/5.3.0/bbc_news_logo.png",
+      "publishedAt": "2023-02-24T05:37:24.7542693Z",
+      "content": "Ukraine and Russia have a long, complicated history. Ukraine became independent in 1991, following the fall of the USSR, and gradually grew closer to the European Union and the West. \r\nRussia had lon… [+1329 chars]"
+    },
+    {
+      "source": { "id": "bbc-news", "name": "BBC News" },
+      "author": "BBC News",
+      "title": "Los Angeles under first blizzard warning since 1989",
+      "description": "Up to 8ft of snow is forecast to blanket parts of usually balmy southern California.",
+      "url": "http://www.bbc.co.uk/news/world-us-canada-64753583",
+      "urlToImage": "https://ichef.bbci.co.uk/news/1024/branded_news/1365D/production/_128735497_gettyimages-1247421586.jpg",
+      "publishedAt": "2023-02-24T04:37:13.6925242Z",
+      "content": "Parts of usually balmy southern California are under their first blizzard warning since 1989.\r\nForecasters are predicting record snowfall of up to 8ft (2.4m) in mountains to the east of Los Angeles b… [+3404 chars]"
+    }
+  ]
+}
