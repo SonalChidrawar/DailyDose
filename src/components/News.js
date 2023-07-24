@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
+import OfflineMessage from "./OfflineMessage";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { getCachedData, cacheData, clearOldData } from "../utils/cache";
+
 
 const News = (props) => {
   const [articles, setArticles] = useState([]);
@@ -12,21 +15,41 @@ const News = (props) => {
   
 
   const updateNews = async () => {
-    props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-    setLoading(true);
-    let data = await fetch(url);
-    props.setProgress(30);
-    let parsedData = await data.json();
-    props.setProgress(60);
-    setArticles(parsedData.articles);
-    setTotalResults(parsedData.totalResults);
-    setLoading(false);
-    props.setProgress(100);    //progress goes from 0 to 100
+    // Check if there's cached data for the category
+    const cachedData = getCachedData(props.category);
+
+    if (cachedData) {
+      setArticles(cachedData.articles);
+      setTotalResults(cachedData.totalResults);
+      setLoading(false);
+    } else {
+      // Fetch data from the API
+      props.setProgress(10);
+      const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+      setLoading(true);
+      let data = await fetch(url);
+      props.setProgress(30);
+      let parsedData = await data.json();
+      props.setProgress(60);
+      setArticles(parsedData.articles);
+      setTotalResults(parsedData.totalResults);
+      setLoading(false);
+      props.setProgress(100); // Progress goes from 0 to 100
+
+      // Cache the fetched data
+      cacheData(props.category, {
+        articles: parsedData.articles,
+        totalResults: parsedData.totalResults,
+        timestamp: Date.now(), // Add a timestamp to use for LRU
+      });
+
+      // Clear old data using LRU strategy (maxSize in bytes)
+      clearOldData([props.category], 1024 * 1024); // Example: 1MB cache size
+    }
   }
 
   useEffect(() => {
-  document.title = `${props.category} - NewsMonkey`;
+  document.title = `${props.category} - DailyDose`;
     updateNews();
   }, []);
 
@@ -62,9 +85,10 @@ const News = (props) => {
     return (
       <div className="container my-3">
         <h2 className="text-center" style={{marginTop: 83}}>
-          NewsMonkey - {props.category} Top Headlines
+          DailyDose - {props.category} Top Headlines
         </h2>
         {loading && <Spinner />}
+        {!navigator.onLine && <OfflineMessage />}
 
         <InfiniteScroll
           dataLength={articles.length}
