@@ -7,21 +7,26 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { getCachedData, cacheData, clearOldData } from "../utils/cache";
 
 const News = (props) => {
+  // State variables
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
 
+  // Function to fetch news data
   const updateNews = async () => {
+
     try {
       // Check if there's cached data for the category
       const cachedData = getCachedData(props.category);
 
-      if (cachedData) {
+      if (cachedData) {  
+        // Use cached data if available
         setArticles(cachedData.articles);
         setTotalResults(cachedData.totalResults);
         setLoading(false);
-      } else {
+      } 
+      else {
         // Fetch data from the API
         props.setProgress(10);
         const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
@@ -39,36 +44,36 @@ const News = (props) => {
         cacheData(props.category, {
           articles: parsedData.articles,
           totalResults: parsedData.totalResults,
-          timestamp: Date.now(), // Add a timestamp to use for LRU
+          timestamp: Date.now(), // Timestamp to use for LRU
         });
 
         // Clear old data using LRU strategy (maxSize in bytes)
-        clearOldData([props.category], 1024 * 1024); // Example: 1MB cache size
+        clearOldData([props.category], 1024 * 1024);
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error while fetching news:", error);
       setLoading(false);
     }
   };
 
+  // useEffect to fetch data on component mount and set document title
   useEffect(() => {
     document.title = `${props.category} - DailyDose`;
     updateNews();
   }, []);
 
+  // Function to fetch more news data on InfiniteScroll
   const fetchMoreData = async () => {
     try {
-      const url = `https://newsapi.org/v2/top-headlines?country=${
-        props.country
-      }&category=${props.category}&apiKey=${props.apiKey}&page=${
-        page + 1
-      }&pageSize=${props.pageSize}`;
+      const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=${props.pageSize}`;
       setPage(page + 1);
       let data = await fetch(url);
       let parsedData = await data.json();
       setArticles(articles.concat(parsedData.articles));
       setTotalResults(parsedData.totalResults);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Error while fetching more news:", error);
     }
   };
@@ -95,11 +100,7 @@ const News = (props) => {
                   <NewsItem
                     key={element.url}
                     title={element.title ? element.title : ""}
-                    description={
-                      element.description
-                        ? element.description.slice(0, 80)
-                        : ""
-                    }
+                    description={ element.description ? element.description.slice(0, 80) : "" }
                     imageUrl={element.urlToImage}
                     url={element.url}
                     author={element.author}
@@ -121,6 +122,8 @@ News.defaultProps = {
   pageSize: 8,
   category: "general",
 };
+
+// Prop types validation
 News.propTypes = {
   country: PropTypes.string,
   pageSize: PropTypes.number,

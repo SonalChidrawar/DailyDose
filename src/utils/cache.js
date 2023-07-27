@@ -1,5 +1,3 @@
-// cache.js
-
 // Function to read data from Local Storage
 export const getCachedData = (key) => {
     const cachedData = localStorage.getItem(key);
